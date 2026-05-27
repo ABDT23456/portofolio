@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- === SEO META TAGS === -->
+    <title>Portefolio | GBAGUIDI Perenne</title>
+    <meta name="description" content="Portefolio de GBAGUIDI Perenne — Étudiant en Systèmes Informatiques et Logiciels. Compétences en développement, systèmes et bases de données." />
+    <meta name="keywords" content="portfolio, GBAGUIDI Perenne, systèmes informatiques, logiciels, développement, web, bases de données, Linux, DevOps" />
+    <meta name="author" content="GBAGUIDI Perenne" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="fr" />
+    <link rel="canonical" href="https://votresite.com/" />
+
+    <!-- === OPEN GRAPH (Facebook, LinkedIn) === -->
+    <meta property="og:title" content="Portefolio | GBAGUIDI Perenne" />
+    <meta property="og:description" content="Portefolio de GBAGUIDI Perenne — Compétences en développement, systèmes et bases de données." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://votresite.com/" />
+    <meta property="og:image" content="https://votresite.com/og-image.jpg" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- === TWITTER CARD === -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Portefolio | GBAGUIDI Perenne" />
+    <meta name="twitter:description" content="Portefolio — Compétences en développement, systèmes et bases de données." />
+    <meta name="twitter:image" content="https://votresite.com/og-image.jpg" />
+
+    <!-- === GOOGLE ANALYTICS GA4 (remplacer G-XXXXXXXXXX par votre ID) === -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- === STRUCTURED DATA (JSON-LD) === -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "GBAGUIDI Perenne",
+        "jobTitle": "Étudiant en Systèmes Informatiques et Logiciels",
+        "url": "https://votresite.com/",
+        "knowsAbout": ["Développement Web", "Administration Systèmes", "Bases de Données", "DevOps"],
+        "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Formation SIL"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" />
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <div class="container nav-container">
+<a href="#" class="logo"><i class="fas fa-code"></i> Portefolio</a>
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li><a href="#about" class="nav-link">À propos</a></li>
+                    <li><a href="#skills" class="nav-link">Compétences</a></li>
+                    <li><a href="#projects" class="nav-link">Projets</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="container hero-content">
+                <div class="hero-text" style="grid-column: 1 / -1; text-align: center;">
+                    <p class="hero-subtitle" id="typedSubtitle"></p>
+                    <h1 class="hero-title"><span class="highlight">GBAGUIDI Perenne</span></h1>
+                    <p class="hero-description">
+                        Étudiant en Systèmes Informatiques et Logiciels. Passionné par le développement logiciel,
+                        l'administration systèmes et les bases de données. Je conçois des solutions robustes
+                        et modernes pour répondre aux défis techniques.
+                    </p>
+                    <div class="hero-buttons" style="justify-content: center;">
+                        <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> Voir mes projets</a>
+                        <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Me contacter</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-target="10">0</span>
+                            <span class="hero-stat-label">Projets</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-target="3">0</span>
+                            <span class="hero-stat-label">Années d'étude</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-target="5">0</span>
+                            <span class="hero-stat-label">Technologies</span>
+                        </div>
+                    </div>
+                    <div class="hero-socials" style="justify-content: center;">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="section-title">À propos de moi</h2>
+                <div class="about-content">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Parcours</h3>
+                        <p>
+                            Actuellement en formation en Systèmes Informatiques et Logiciels, j'acquiers des compétences
+                            solides en développement, administration réseau et gestion de bases de données.
+                        </p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Passion</h3>
+                        <p>
+                            Je suis passionné par la création d'applications performantes et bien architecturées,
+                            avec un souci constant de la qualité du code et de l'expérience utilisateur.
+                        </p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Objectif</h3>
+                        <p>
+                            Mon objectif est de contribuer à des projets innovants où je peux mettre à profit
+                            mes compétences techniques tout en continuant à apprendre et à évoluer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section section-alt" id="skills">
+            <div class="container">
+                <h2 class="section-title">Compétences</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">
+                            <i class="fas fa-laptop-code"></i> Développement
+                        </h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <span>HTML / CSS</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>JavaScript</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Python</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Java</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">
+                            <i class="fas fa-server"></i> Systèmes
+                        </h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <span>Linux / Unix</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Réseaux</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Docker</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Git</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">
+                            <i class="fas fa-database"></i> Bases de données
+                        </h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <span>PostgreSQL</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>MySQL</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>MongoDB</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>SQLite</span>
+                                <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section" id="projects">
+            <div class="container">
+                <h2 class="section-title">Projets</h2>
+                <div class="projects-grid">
+                    <article class="project-card">
+                        <div class="project-image">
+                            <div class="project-placeholder">
+                                <img src="https://placehold.co/600x400/1e293b/6364ff?text=Web+App" alt="Application Web" loading="lazy" />
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Application Web</h3>
+                            <p>Application full-stack de gestion de tâches avec authentification et base de données PostgreSQL.</p>
+                            <div class="project-tags">
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>PostgreSQL</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> Voir sur GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card">
+                        <div class="project-image">
+                            <div class="project-placeholder">
+                                <img src="https://placehold.co/600x400/1e293b/6364ff?text=CLI+Tool" alt="Outil CLI" loading="lazy" />
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Outil CLI</h3>
+                            <p>Utilitaire en ligne de commande pour l'analyse de logs systèmes, développé en Python.</p>
+                            <div class="project-tags">
+                                <span>Python</span>
+                                <span>Bash</span>
+                                <span>Linux</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> Voir sur GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card">
+                        <div class="project-image">
+                            <div class="project-placeholder">
+                                <img src="https://placehold.co/600x400/1e293b/6364ff?text=Gestion+BDD" alt="Base de données" loading="lazy" />
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Base de données</h3>
+                            <p>Conception et implémentation d'un système de gestion de bibliothèque avec requêtes optimisées.</p>
+                            <div class="project-tags">
+                                <span>SQL</span>
+                                <span>PostgreSQL</span>
+                                <span>PL/SQL</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> Voir sur GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section section-alt" id="contact">
+            <div class="container">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>etudiant@example.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Localisation</h4>
+                                <p>France</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Téléphone</h4>
+                                <p>+33 6 XX XX XX XX</p>
+                            </div>
+                        </div>
+                        <div class="contact-socials">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" name="name" placeholder="Votre nom" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="votre@email.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <input type="text" id="subject" name="subject" placeholder="Sujet du message" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            <span>Envoyer le message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                        <p class="form-feedback" id="formFeedback"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 GBAGUIDI Perenne. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

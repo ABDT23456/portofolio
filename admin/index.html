@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin | Portfolio SIL</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-screen">
+            <div class="login-card">
+                <div class="login-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>Admin Dashboard</h1>
+                    <p>Connectez-vous pour gérer votre portfolio</p>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="loginUsername">Identifiant</label>
+                        <input type="text" id="loginUsername" placeholder="admin" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mot de passe</label>
+                        <input type="password" id="loginPassword" placeholder="••••••" required />
+                    </div>
+                    <p class="form-error" id="loginError"></p>
+                    <button type="submit" class="btn-login">Se connecter</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboardScreen" class="dashboard-screen" style="display:none;">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <i class="fas fa-code"></i>
+                    <span>Portfolio SIL</span>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-view="dashboard">
+                        <i class="fas fa-chart-bar"></i> Tableau de bord
+                    </a>
+                    <a href="#" class="nav-item" data-view="projects">
+                        <i class="fas fa-folder"></i> Projets
+                    </a>
+                    <a href="#" class="nav-item" data-view="messages">
+                        <i class="fas fa-envelope"></i> Messages
+                        <span class="badge" id="unreadBadge" style="display:none;">0</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="analytics">
+                        <i class="fas fa-chart-line"></i> Analytics
+                    </a>
+                    <a href="#" class="nav-item" data-view="settings">
+                        <i class="fas fa-cog"></i> Paramètres
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <a href="/" target="_blank" class="nav-item">
+                        <i class="fas fa-external-link-alt"></i> Voir le site
+                    </a>
+                    <a href="#" id="logoutBtn" class="nav-item logout">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <header class="topbar">
+                    <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+                    <h2 id="viewTitle">Tableau de bord</h2>
+                    <div class="topbar-right">
+                        <span id="adminName">Admin</span>
+                    </div>
+                </header>
+
+                <div class="content-area" id="contentArea">
+                    <!-- Dynamic content loaded by JS -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
