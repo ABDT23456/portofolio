@@ -1,6 +1,20 @@
 'use strict';
 
+const API_BASE = '';
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    // =============================================
+    // TRACK PAGE VISIT (pour Analytics Admin)
+    // =============================================
+    function trackVisit() {
+        fetch(`${API_BASE}/api/analytics/visit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ page: window.location.pathname, referrer: document.referrer })
+        }).catch(() => {});
+    }
+    trackVisit();
 
     // =============================================
     // PARTICLE BACKGROUND
@@ -159,6 +173,67 @@ document.addEventListener('DOMContentLoaded', () => {
     animateCounters();
 
     // =============================================
+    // LOAD PROJECTS FROM API
+    // =============================================
+    async function loadProjects() {
+        const container = document.querySelector('.projects-grid');
+        if (!container) return;
+
+        try {
+            const response = await fetch(`${API_BASE}/api/projects`);
+            const projects = await response.json();
+            if (projects.length === 0) return;
+
+            container.innerHTML = projects.map(p => `
+                <article class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <img src="${p.image_url || 'https://placehold.co/600x400/1e293b/6364ff?text=' + encodeURIComponent(p.title)}" alt="${p.title} - Projet de GBAGUIDI Perenne" loading="lazy" />
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>${p.title}</h3>
+                        <p>${p.description}</p>
+                        <div class="project-tags">
+                            ${(p.tags || []).map(t => `<span>${t}</span>`).join('')}
+                        </div>
+                        <div class="project-links">
+                            <a href="${p.github_url || '#'}" target="_blank" rel="noopener noreferrer" class="project-link" data-project-id="${p.id}">
+                                <i class="fab fa-github"></i> Voir sur GitHub
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            // Track clicks
+            container.querySelectorAll('.project-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    const projectId = link.dataset.projectId;
+                    fetch(`${API_BASE}/api/projects/${projectId}/click`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type: 'github' })
+                    }).catch(() => {});
+                });
+            });
+
+            // Observe new cards for reveal animation
+            const newCards = container.querySelectorAll('.project-card');
+            newCards.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                if (revealObserver) revealObserver.observe(el);
+            });
+            setTimeout(() => forceReveal(), 100);
+
+        } catch (err) {
+            console.log('Projects loaded from static HTML');
+        }
+    }
+
+    // =============================================
     // MOBILE MENU
     // =============================================
     const hamburger = document.getElementById('hamburger');
@@ -241,12 +316,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // CONTACT FORM (Formspree)
+    // CONTACT FORM (envoi vers l'API du serveur)
     // =============================================
     const contactForm = document.getElementById('contactForm');
     const formFeedback = document.getElementById('formFeedback');
 
     if (contactForm) {
+        // Supprimer l'attribut action Formspree, on utilise l'API
+        contactForm.removeAttribute('action');
+
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -272,11 +350,10 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = true;
 
             try {
-                const formData = new FormData(contactForm);
-                const response = await fetch(contactForm.action, {
+                const response = await fetch(`${API_BASE}/api/messages`, {
                     method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, subject, message })
                 });
                 const data = await response.json();
 
@@ -331,10 +408,17 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(styleSheet);
 
-    setTimeout(() => {
+    function forceReveal() {
         document.querySelectorAll('.about-card, .skill-category, .project-card, .contact-info, .contact-form').forEach(el => {
             const rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight - 60) el.classList.add('revealed');
         });
-    }, 100);
+    }
+
+    setTimeout(forceReveal, 100);
+
+    // =============================================
+    // INIT : load projects from API
+    // =============================================
+    loadProjects();
 });
