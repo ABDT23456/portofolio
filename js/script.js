@@ -1,20 +1,6 @@
 'use strict';
 
-const API_BASE = '';
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    // =============================================
-    // TRACK PAGE VISIT
-    // =============================================
-    function trackVisit() {
-        fetch(`${API_BASE}/api/analytics/visit`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ page: window.location.pathname, referrer: document.referrer })
-        }).catch(() => {});
-    }
-    trackVisit();
 
     // =============================================
     // PARTICLE BACKGROUND
@@ -35,9 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         class Particle {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
@@ -51,8 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.pulse += 0.02;
                 this.x += this.speedX;
                 this.y += this.speedY;
-
-                // Mouse interaction
                 const dx = this.x - mouseX;
                 const dy = this.y - mouseY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
@@ -61,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.x += (dx / dist) * -force;
                     this.y += (dy / dist) * -force;
                 }
-
                 if (this.x < 0 || this.x > canvas.width) this.reset();
                 if (this.y < 0 || this.y > canvas.height) this.reset();
             }
@@ -81,12 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            // Draw connections
+            particles.forEach(p => { p.update(); p.draw(); });
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -103,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-
             animationId = requestAnimationFrame(animate);
         }
 
@@ -111,25 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
         initParticles();
         animate();
 
-        window.addEventListener('resize', () => {
-            resize();
-            initParticles();
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        // Cleanup if needed (e.g. page unload)
-        window.addEventListener('beforeunload', () => {
-            if (animationId) cancelAnimationFrame(animationId);
-        });
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        window.addEventListener('beforeunload', () => { if (animationId) cancelAnimationFrame(animationId); });
     }
     createParticles();
 
     // =============================================
-    // TYPING SUBTITLE ANIMATION
+    // TYPING SUBTITLE
     // =============================================
     function typeSubtitle() {
         const el = document.getElementById('typedSubtitle');
@@ -141,14 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
             'Systèmes & Logiciels ⚙️',
             'Innovation & Créativité ✨'
         ];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let speed = 60;
+        let phraseIndex = 0, charIndex = 0, isDeleting = false, speed = 60;
 
         function type() {
             const current = phrases[phraseIndex];
-
             if (isDeleting) {
                 el.textContent = current.substring(0, charIndex - 1);
                 charIndex--;
@@ -158,25 +118,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 charIndex++;
                 speed = 60;
             }
-
-            if (!isDeleting && charIndex === current.length) {
-                speed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                speed = 500;
-            }
-
+            if (!isDeleting && charIndex === current.length) { speed = 2000; isDeleting = true; }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; speed = 500; }
             setTimeout(type, speed);
         }
-
         setTimeout(type, 1000);
     }
     typeSubtitle();
 
     // =============================================
-    // COUNTER ANIMATION (Hero Stats)
+    // COUNTER ANIMATION
     // =============================================
     function animateCounters() {
         const counters = document.querySelectorAll('.hero-stat-number');
@@ -189,104 +140,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     const target = parseInt(el.dataset.target) || 0;
                     const duration = 2000;
                     const startTime = performance.now();
-
                     function updateCounter(currentTime) {
                         const elapsed = currentTime - startTime;
                         const progress = Math.min(elapsed / duration, 1);
-                        // Ease out cubic
                         const eased = 1 - Math.pow(1 - progress, 3);
                         const current = Math.floor(eased * target);
-
-                        el.textContent = current + (progress < 1 ? '+' : '+');
-
-                        if (progress < 1) {
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            el.textContent = target + '+';
-                        }
+                        el.textContent = current + '+';
+                        if (progress < 1) requestAnimationFrame(updateCounter);
+                        else el.textContent = target + '+';
                     }
-
                     requestAnimationFrame(updateCounter);
                     observer.unobserve(el);
                 }
             });
         }, { threshold: 0.5 });
-
         counters.forEach(c => observer.observe(c));
     }
     animateCounters();
-
-    // =============================================
-    // LOAD PROJECTS FROM API
-    // =============================================
-    async function loadProjects() {
-        const container = document.querySelector('.projects-grid');
-        if (!container) return;
-
-        try {
-            const response = await fetch(`${API_BASE}/api/projects`);
-            const projects = await response.json();
-            if (projects.length === 0) return;
-
-            container.innerHTML = projects.map(p => `
-                <article class="project-card">
-                    <div class="project-image">
-                        <div class="project-placeholder">
-                            <img src="${p.image_url || 'https://placehold.co/600x400/1e293b/6364ff?text=' + encodeURIComponent(p.title)}" alt="${p.title}" loading="lazy" />
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>${p.title}</h3>
-                        <p>${p.description}</p>
-                        <div class="project-tags">
-                            ${(p.tags || []).map(t => `<span>${t}</span>`).join('')}
-                        </div>
-                        <div class="project-links">
-                            <a href="${p.github_url || '#'}" target="_blank" rel="noopener noreferrer" class="project-link" data-project-id="${p.id}">
-                                <i class="fab fa-github"></i> Voir sur GitHub
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
-
-            container.querySelectorAll('.project-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    const projectId = link.dataset.projectId;
-                    fetch(`${API_BASE}/api/projects/${projectId}/click`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ type: 'github' })
-                    }).catch(() => {});
-                });
-            });
-
-            const newCards = container.querySelectorAll('.project-card');
-            newCards.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                if (revealObserver) revealObserver.observe(el);
-            });
-            setTimeout(() => forceReveal(), 100);
-
-        } catch (err) {
-            console.log('Projects loaded from static HTML');
-        }
-    }
 
     // =============================================
     // MOBILE MENU
     // =============================================
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
-
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -296,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // HEADER SCROLL SHADOW
+    // HEADER SCROLL
     // =============================================
     const header = document.querySelector('.header');
     if (header) {
@@ -306,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // ACTIVE NAV LINK ON SCROLL
+    // ACTIVE NAV LINK
     // =============================================
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -317,18 +198,13 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionBottom = sectionTop + section.offsetHeight;
-            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                current = section.getAttribute('id');
-            }
+            if (scrollPos >= sectionTop && scrollPos < sectionBottom) current = section.getAttribute('id');
         });
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
+            if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
         });
     }
-
     if (sections.length && navLinks.length) {
         window.addEventListener('scroll', updateActiveLink);
         window.addEventListener('load', updateActiveLink);
@@ -349,7 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.5 });
-
     skillFills.forEach(fill => skillObserver.observe(fill));
 
     // =============================================
@@ -366,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // CONTACT FORM
+    // CONTACT FORM (Formspree)
     // =============================================
     const contactForm = document.getElementById('contactForm');
     const formFeedback = document.getElementById('formFeedback');
@@ -385,8 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formFeedback.className = 'form-feedback error';
                 return;
             }
-
-            if (!isValidEmail(email)) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 formFeedback.textContent = 'Veuillez entrer un email valide.';
                 formFeedback.className = 'form-feedback error';
                 return;
@@ -398,29 +272,29 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = true;
 
             try {
-                const response = await fetch(`${API_BASE}/api/messages`, {
+                const formData = new FormData(contactForm);
+                const response = await fetch(contactForm.action, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, subject, message })
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
                 });
                 const data = await response.json();
-                if (!response.ok) throw new Error(data.error);
 
-                formFeedback.textContent = 'Message envoyé avec succès ! Je vous répondrai rapidement.';
-                formFeedback.className = 'form-feedback success';
-                contactForm.reset();
+                if (response.ok) {
+                    formFeedback.textContent = 'Message envoyé avec succès !';
+                    formFeedback.className = 'form-feedback success';
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.error || 'Erreur lors de l\'envoi');
+                }
             } catch (error) {
-                formFeedback.textContent = error.message || 'Une erreur est survenue. Veuillez réessayer plus tard.';
+                formFeedback.textContent = error.message || 'Une erreur est survenue.';
                 formFeedback.className = 'form-feedback error';
             } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         });
-    }
-
-    function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     // =============================================
@@ -449,31 +323,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const styleSheet = document.createElement('style');
     styleSheet.textContent = `
-        .about-card.revealed,
-        .skill-category.revealed,
-        .project-card.revealed,
-        .contact-info.revealed,
-        .contact-form.revealed {
+        .about-card.revealed, .skill-category.revealed, .project-card.revealed,
+        .contact-info.revealed, .contact-form.revealed {
             opacity: 1 !important;
             transform: translateY(0) !important;
         }
     `;
     document.head.appendChild(styleSheet);
 
-    function forceReveal() {
+    setTimeout(() => {
         document.querySelectorAll('.about-card, .skill-category, .project-card, .contact-info, .contact-form').forEach(el => {
             const rect = el.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            if (rect.top < windowHeight - 60) {
-                el.classList.add('revealed');
-            }
+            if (rect.top < window.innerHeight - 60) el.classList.add('revealed');
         });
-    }
-
-    setTimeout(forceReveal, 100);
-
-    // =============================================
-    // INIT
-    // =============================================
-    loadProjects();
+    }, 100);
 });
